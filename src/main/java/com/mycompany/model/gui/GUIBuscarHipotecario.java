@@ -156,7 +156,7 @@ public class GUIBuscarHipotecario extends javax.swing.JFrame {
 
     private void btnBuscarHipotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarHipotecarioActionPerformed
 
-        Prestamo prestamo = ServicioPrestamo.buscarPrestamo(Integer.parseInt(txtIdPrestamo.getText()));
+        Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(Integer.parseInt(txtIdPrestamo.getText()));
 
         if (prestamo != null) {
 

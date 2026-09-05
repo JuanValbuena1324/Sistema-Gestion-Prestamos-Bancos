@@ -85,29 +85,29 @@ public class GUIListarHipotecario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarHipotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarHipotecarioActionPerformed
+
+        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
         
-        Map<Integer, Prestamo> prestamos;
-        prestamos = ServicioPrestamo.getPrestamos(); 
-
-
         DefaultTableModel modelo = (DefaultTableModel) tblListarHipotecario.getModel();
-        modelo.setRowCount(0); 
+        modelo.setRowCount(0);
 
+        for (Prestamo prestamo : prestamos.values()) {
 
-        for (Map.Entry<Integer, Prestamo> pre : prestamos.entrySet()) {
-            Integer idPrestamo = pre.getKey();
-            PrestamoHipotecario hipo = (PrestamoHipotecario) pre.getValue();
-  
-            Object[] fila = new Object[]{
-                idPrestamo, 
-                String.format("$ %, .0f", hipo.getMonto()),
-                hipo.getTasaIntereses(), 
-                hipo.getPlazoMeses(), 
-                hipo.getFechaRegistro(),
-                hipo.getTipoInmueble(), 
-                hipo.getDireccionInmueble() 
-            };
-            modelo.addRow(fila);
+            if (prestamo instanceof PrestamoHipotecario) {
+
+                PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
+
+                Object[] fila = new Object[]{
+                    hipo.getIdPrestamo(),
+                    String.format("$ %, .0f", hipo.getMonto()),
+                    hipo.getTasaIntereses(),
+                    hipo.getPlazoMeses(),
+                    hipo.getFechaRegistro(),
+                    hipo.getTipoInmueble(),
+                    hipo.getDireccionInmueble()
+                };
+                modelo.addRow(fila);
+            }
         }
     }//GEN-LAST:event_btnListarHipotecarioActionPerformed
 

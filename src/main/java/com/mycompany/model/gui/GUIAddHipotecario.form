@@ -43,13 +43,13 @@
                       </Group>
                       <EmptySpace pref="26" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtIdPrestamo" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtIdPrestamo" alignment="0" pref="160" max="32767" attributes="0"/>
                           <Component id="txtMonto" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtTasaInteres" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtPlazoMeses" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFecha" alignment="0" pref="160" max="32767" attributes="0"/>
                           <Component id="txtTipoInmueble" max="32767" attributes="0"/>
                           <Component id="txtDireccionInmueble" max="32767" attributes="0"/>
+                          <Component id="jDateChooser1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -81,9 +81,9 @@
                   <Component id="txtPlazoMeses" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtFecha" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                  <Component id="jDateChooser1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -136,8 +136,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtPlazoMeses">
     </Component>
-    <Component class="javax.swing.JTextField" name="txtFecha">
-    </Component>
     <Component class="javax.swing.JButton" name="btnAddHipotecario">
       <Properties>
         <Property name="text" type="java.lang.String" value="Crear Prestamo Hipotecario"/>
@@ -162,6 +160,8 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtDireccionInmueble">
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
     </Component>
   </SubComponents>
 </Form>

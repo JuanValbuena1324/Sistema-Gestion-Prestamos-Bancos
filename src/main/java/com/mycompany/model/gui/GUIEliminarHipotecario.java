@@ -35,6 +35,19 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtIdPrestamoHipotecario = new javax.swing.JTextField();
         btnEliminarHipotecario = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtMonto = new javax.swing.JTextField();
+        txtTasaInteres = new javax.swing.JTextField();
+        txtPlazo = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
+        txtTipo = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GUI Eliminar Prestamo Hipotecario");
@@ -48,19 +61,67 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Monto:");
+
+        jLabel3.setText("Tasa de Interes:");
+
+        jLabel4.setText("Plazo de Meses:");
+
+        jLabel5.setText("Fecha de Registro: ");
+
+        jLabel6.setText("Tipo de Inmueble:");
+
+        jLabel7.setText("Direccion del Inmueble:");
+
+        txtMonto.setEditable(false);
+
+        txtTasaInteres.setEditable(false);
+
+        txtPlazo.setEditable(false);
+
+        txtFecha.setEditable(false);
+
+        txtTipo.setEditable(false);
+
+        txtDireccion.setEditable(false);
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 88, Short.MAX_VALUE)
+                .addComponent(btnBuscar)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminarHipotecario)
+                .addGap(31, 31, 31))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnEliminarHipotecario)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(27, 27, 27)
-                        .addComponent(txtIdPrestamoHipotecario, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtIdPrestamoHipotecario, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                    .addComponent(txtMonto)
+                    .addComponent(txtTasaInteres)
+                    .addComponent(txtPlazo)
+                    .addComponent(txtFecha)
+                    .addComponent(txtTipo)
+                    .addComponent(txtDireccion))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -69,9 +130,35 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtIdPrestamoHipotecario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminarHipotecario)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtTasaInteres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPlazo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminarHipotecario)
+                    .addComponent(btnBuscar))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -79,30 +166,37 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
 
     private void btnEliminarHipotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHipotecarioActionPerformed
 
-        if (txtIdPrestamoHipotecario.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "El Campo de ID del Préstamo es obligatorio");
+// Valida que se haya buscado el préstamo antes
+        if (txtMonto.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Primero debe Buscar el préstamo antes de eliminar");
             return;
         }
 
         try {
             int id = Integer.parseInt(txtIdPrestamoHipotecario.getText());
-            Prestamo prestamo = ServicioPrestamo.buscarPrestamo(id);
+            
+            Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(id);
 
             if (prestamo != null) {
 
                 if (prestamo instanceof PrestamoHipotecario) {
-
                     PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
 
-                    boolean centinela = ServicioPrestamo.eliminarPrestamo(id);
+                    boolean centinela = ServicioPrestamo.getInstance().eliminarPrestamo(id);
 
                     if (centinela) {
                         JOptionPane.showMessageDialog(this, "Préstamo Hipotecario Eliminado con Éxito");
-                        txtIdPrestamoHipotecario.setText(""); 
+                        txtIdPrestamoHipotecario.setText("");
+                        // Limpiar todos los campos
+                        txtMonto.setText("");
+                        txtTasaInteres.setText("");
+                        txtPlazo.setText("");
+                        txtFecha.setText("");
+                        txtTipo.setText("");
+                        txtDireccion.setText("");
                     } else {
                         JOptionPane.showMessageDialog(this, "Préstamo Hipotecario no Encontrado/Registrado");
                     }
-
                 } else {
                     JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Vehicular. Vaya a la GUI de eliminar vehicular.");
                 }
@@ -115,6 +209,48 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
         }
     }//GEN-LAST:event_btnEliminarHipotecarioActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+
+        if (txtIdPrestamoHipotecario.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "El Campo de ID del Préstamo es obligatorio");
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(txtIdPrestamoHipotecario.getText());
+            
+            Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(Integer.parseInt(txtIdPrestamoHipotecario.getText()));
+
+
+            if (prestamo != null) {
+
+                if (prestamo instanceof PrestamoHipotecario) {
+                    PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
+
+                    // Llenar los campos de visualización
+                    txtMonto.setText(String.valueOf(hipo.getMonto()));
+                    txtTasaInteres.setText(String.valueOf(hipo.getTasaIntereses()));
+                    txtPlazo.setText(String.valueOf(hipo.getPlazoMeses()));
+                    txtFecha.setText(String.valueOf(hipo.getFechaRegistro()));
+                    txtTipo.setText(hipo.getTipoInmueble());
+                    txtDireccion.setText(hipo.getDireccionInmueble());
+
+                    JOptionPane.showMessageDialog(this, "Préstamo Hipotecario encontrado! \nAhora puede eliminar.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Vehicular. Vaya a la GUI de eliminar vehicular.");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No se Encontró ese Préstamo Hipotecario");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+        }
+
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,8 +288,21 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminarHipotecario;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtIdPrestamoHipotecario;
+    private javax.swing.JTextField txtMonto;
+    private javax.swing.JTextField txtPlazo;
+    private javax.swing.JTextField txtTasaInteres;
+    private javax.swing.JTextField txtTipo;
     // End of variables declaration//GEN-END:variables
 }

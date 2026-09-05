@@ -41,12 +41,12 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
         txtMonto = new javax.swing.JTextField();
         txtTasaInteres = new javax.swing.JTextField();
         txtPlazoMeses = new javax.swing.JTextField();
-        txtFecha = new javax.swing.JTextField();
         btnAddHipotecario = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtTipoInmueble = new javax.swing.JTextField();
         txtDireccionInmueble = new javax.swing.JTextField();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GUI Add¨Prestamo Hipotecario");
@@ -99,13 +99,13 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
                             .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtIdPrestamo)
+                            .addComponent(txtIdPrestamo, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                             .addComponent(txtMonto)
                             .addComponent(txtTasaInteres)
                             .addComponent(txtPlazoMeses)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                             .addComponent(txtTipoInmueble)
-                            .addComponent(txtDireccionInmueble))))
+                            .addComponent(txtDireccionInmueble)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
@@ -128,9 +128,9 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtPlazoMeses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -161,7 +161,7 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
 
         String tipoInmueble;
         String direccionInmueble;
-        
+
         PrestamoHipotecario prestamo;
 
         try {
@@ -169,7 +169,6 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
             String strMonto = txtMonto.getText().trim();
             String strTasa = txtTasaInteres.getText().trim();
             String strPlazo = txtPlazoMeses.getText().trim();
-            String strFecha = txtFecha.getText().trim();
 
             tipoInmueble = txtTipoInmueble.getText().trim();
             direccionInmueble = txtDireccionInmueble.getText().trim();
@@ -178,25 +177,40 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
             monto = Double.parseDouble(strMonto);
             tasaInteres = Double.parseDouble(strTasa);
             plazoMeses = Integer.parseInt(strPlazo);
-            fechaRegistro = LocalDate.parse(strFecha);
 
-            prestamo = new PrestamoHipotecario(idPrestamo, monto, tasaInteres, plazoMeses, fechaRegistro, tipoInmueble, direccionInmueble);
+            // 1. Capturar la fecha desde el JDateChooser
+            java.util.Date fechaUtil = jDateChooser1.getDate();
+            if (fechaUtil != null) {
+                // 2. Convertir de java.util.Date a LocalDate
+                fechaRegistro = fechaUtil.toInstant()
+                        .atZone(java.time.ZoneId.systemDefault())
+                        .toLocalDate();
 
-            ServicioPrestamo.addPrestamo(prestamo);
+                // 3. Crear el préstamo
+                prestamo = new PrestamoHipotecario(idPrestamo, monto, tasaInteres, plazoMeses, fechaRegistro, tipoInmueble, direccionInmueble);
 
-            JOptionPane.showMessageDialog(this, "¡Préstamo hipotecario creado exitosamente!");
+                // 4. Guardar el préstamo
+                ServicioPrestamo.getInstance().addPrestamo(prestamo);
 
-            txtIdPrestamo.setText("");
-            txtMonto.setText("");
-            txtTasaInteres.setText("");
-            txtPlazoMeses.setText("");
-            txtFecha.setText("");
-            txtTipoInmueble.setText("");
-            txtDireccionInmueble.setText("");
-            
+                // 5. Mensaje de éxito
+                JOptionPane.showMessageDialog(this, "¡Préstamo hipotecario creado exitosamente!");
+
+                // 6. Limpiar campos
+                txtIdPrestamo.setText("");
+                txtMonto.setText("");
+                txtTasaInteres.setText("");
+                txtPlazoMeses.setText("");
+                txtTipoInmueble.setText("");
+                txtDireccionInmueble.setText("");
+                jDateChooser1.setDate(null); // Limpiar el calendario
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al crear el prestamo hipotecario: " + e);
         }
+
     }//GEN-LAST:event_btnAddHipotecarioActionPerformed
 
     /**
@@ -236,6 +250,7 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddHipotecario;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -244,7 +259,6 @@ public class GUIAddHipotecario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txtDireccionInmueble;
-    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtIdPrestamo;
     private javax.swing.JTextField txtMonto;
     private javax.swing.JTextField txtPlazoMeses;

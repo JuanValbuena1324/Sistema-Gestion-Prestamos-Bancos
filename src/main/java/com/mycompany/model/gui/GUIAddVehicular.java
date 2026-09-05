@@ -9,6 +9,7 @@ import com.mycompany.model.services.ServicioPrestamo;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import com.mycompany.model.TarjetaPropiedad;
+import com.mycompany.model.services.ServicioTarjetaPropiedad;
 
 /**
  *
@@ -45,13 +46,14 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         txtPlazoMeses = new javax.swing.JTextField();
         txtValorComercial = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnCrearPrestamoVeh = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtPlacaVehiculo = new javax.swing.JTextField();
         txtNumeroMotor = new javax.swing.JTextField();
+        btnSeleccionarTarjeta = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GUI Add Prestamo Vehicular");
@@ -74,10 +76,10 @@ public class GUIAddVehicular extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Crear Prestamo Vehicular");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnCrearPrestamoVeh.setText("Crear Prestamo Vehicular");
+        btnCrearPrestamoVeh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnCrearPrestamoVehActionPerformed(evt);
             }
         });
 
@@ -87,13 +89,24 @@ public class GUIAddVehicular extends javax.swing.JFrame {
 
         jLabel9.setText("Numero Motor");
 
+        txtNumeroMotor.setEditable(false);
+
+        btnSeleccionarTarjeta.setText("Seleccionar Tarjeta Propiedad");
+        btnSeleccionarTarjeta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarTarjetaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGap(20, 20, 20)
+                .addComponent(btnSeleccionarTarjeta)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCrearPrestamoVeh)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
@@ -115,20 +128,18 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel7))
                         .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtValorComercial, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtIdVehicular, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                                    .addComponent(txtMonto)
-                                    .addComponent(txtTasaInteres)
-                                    .addComponent(txtPlazoMeses)))
-                            .addComponent(txtFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtValorComercial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(txtIdVehicular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtTasaInteres, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPlazoMeses, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,9 +161,9 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txtPlazoMeses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -169,9 +180,11 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtNumeroMotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCrearPrestamoVeh)
+                    .addComponent(btnSeleccionarTarjeta))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -181,58 +194,91 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdVehicularActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       int idPrestamo;
-    double monto;
-    double tasaInteres;
-    int plazoMeses;
-    LocalDate fechaRegistro;
+    private void btnCrearPrestamoVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPrestamoVehActionPerformed
 
-    double valorComercial;
-    String marcaVehiculo;
+        // Valida que ya exista la tarjeta (o que esté lleno el campo)
+        if (txtNumeroMotor.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Préstamo no creado. Tarjeta no encontrada. Debe buscar o crear la tarjeta de propiedad primero.");
+            return;
+        }
 
-    TarjetaPropiedad tarjetaPropiedad;
+        try {
+            // 1. Capturar los datos del préstamo (sin la fecha manual)
+            int idPrestamo = Integer.parseInt(txtIdVehicular.getText().trim());
+            double monto = Double.parseDouble(txtMonto.getText().trim());
+            double tasaIntereses = Double.parseDouble(txtTasaInteres.getText().trim());
+            int plazoMeses = Integer.parseInt(txtPlazoMeses.getText().trim());
+            double valorComercial = Double.parseDouble(txtValorComercial.getText().trim());
+            String marcaVehiculo = txtMarca.getText().trim();
 
-    PrestamoVehicular prestamo;
+            // 2. Capturar la fecha desde el JDateChooser
+            java.util.Date fechaUtil = jDateChooser1.getDate();
+            if (fechaUtil != null) {
+                // Convertir de java.util.Date a LocalDate
+                LocalDate fechaRegistro = fechaUtil.toInstant()
+                        .atZone(java.time.ZoneId.systemDefault())
+                        .toLocalDate();
 
-    try {
-        String strId = txtIdVehicular.getText().trim();
-        String strMonto = txtMonto.getText().trim();
-        String strTasa = txtTasaInteres.getText().trim();
-        String strPlazo = txtPlazoMeses.getText().trim();
-        String strFecha = txtFecha.getText().trim();
+                // 3. Buscar la tarjeta existente
+                TarjetaPropiedad tarjeta = ServicioTarjetaPropiedad.getInstance().buscarTarjetaPropiedad(txtPlacaVehiculo.getText().trim());
 
-        valorComercial = Double.parseDouble(txtValorComercial.getText().trim());
-        marcaVehiculo = txtMarca.getText().trim();
+                if (tarjeta == null) {
+                    JOptionPane.showMessageDialog(this, "Tarjeta de Propiedad no encontrada. Debe crear la tarjeta primero.");
+                    return;
+                }
 
-        tarjetaPropiedad = new TarjetaPropiedad(txtPlacaVehiculo.getText().trim(), txtNumeroMotor.getText().trim());
+                // 4. Crear el préstamo con la tarjeta existente
+                PrestamoVehicular prestamo = new PrestamoVehicular(
+                        idPrestamo, monto, tasaIntereses, plazoMeses, fechaRegistro,
+                        valorComercial, marcaVehiculo, tarjeta
+                );
 
-        idPrestamo = Integer.parseInt(strId);
-        monto = Double.parseDouble(strMonto);
-        tasaInteres = Double.parseDouble(strTasa);
-        plazoMeses = Integer.parseInt(strPlazo);
-        fechaRegistro = LocalDate.parse(strFecha);
+                // 5. Guardar préstamo en ServicioPrestamo
+                ServicioPrestamo.getInstance().addPrestamo(prestamo);
 
-        prestamo = new PrestamoVehicular(idPrestamo, monto, tasaInteres, plazoMeses, fechaRegistro, valorComercial, marcaVehiculo, tarjetaPropiedad);
+                JOptionPane.showMessageDialog(this, "Préstamo Vehicular creado!");
 
-        ServicioPrestamo.addPrestamo(prestamo);
+                // 6. Limpiar campos
+                txtIdVehicular.setText("");
+                txtMonto.setText("");
+                txtTasaInteres.setText("");
+                txtPlazoMeses.setText("");
+                txtValorComercial.setText("");
+                txtMarca.setText("");
+                txtPlacaVehiculo.setText("");
+                txtNumeroMotor.setText("");
+                jDateChooser1.setDate(null); // Limpiar el calendario
 
-        JOptionPane.showMessageDialog(this, "¡Préstamo vehicular creado exitosamente!");
+                btnCrearPrestamoVeh.setEnabled(false); // Deshabilita botón después de crear
 
-        txtIdVehicular.setText("");
-        txtMonto.setText("");
-        txtTasaInteres.setText("");
-        txtPlazoMeses.setText("");
-        txtFecha.setText("");
-        txtValorComercial.setText("");
-        txtMarca.setText("");
-        txtPlacaVehiculo.setText("");
-        txtNumeroMotor.setText("");
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al crear el prestamo vehicular: " + e);
-    }
-    }//GEN-LAST:event_jButton1ActionPerformed
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al crear préstamo: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnCrearPrestamoVehActionPerformed
+
+    private void btnSeleccionarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarTarjetaActionPerformed
+
+        String placa = txtPlacaVehiculo.getText().trim();
+
+        TarjetaPropiedad tarjeta = ServicioTarjetaPropiedad.getInstance().buscarTarjetaPropiedad(placa);
+
+        if (tarjeta != null) {
+            // Si existe: llena el campo del motor y habilita la creación
+            txtNumeroMotor.setText(tarjeta.getNumMotor());
+            JOptionPane.showMessageDialog(this, "Tarjeta encontrada!");
+            btnCrearPrestamoVeh.setEnabled(true); // Habilita el botón de crear préstamo
+        } else {
+            // Si no existe: BLOQUEA la creación y muestra el mensaje
+            txtNumeroMotor.setText("");
+            JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Debe crear la Tarjeta de Propiedad en el panel de Adicionar Tarjeta de Propiedad antes de crear el Préstamo Vehicular.");
+            btnCrearPrestamoVeh.setEnabled(false); // Deshabilita el botón de crear préstamo
+        }
+    }//GEN-LAST:event_btnSeleccionarTarjetaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,7 +316,9 @@ public class GUIAddVehicular extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnCrearPrestamoVeh;
+    private javax.swing.JButton btnSeleccionarTarjeta;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -280,7 +328,6 @@ public class GUIAddVehicular extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtIdVehicular;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtMonto;

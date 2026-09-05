@@ -5,6 +5,7 @@
 package com.mycompany.model.gui;
 
 import com.mycompany.model.Prestamo;
+import com.mycompany.model.PrestamoHipotecario;
 import com.mycompany.model.services.ServicioPrestamo;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
@@ -85,23 +86,30 @@ public class GUICalcularCuotaHipotecario extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getPrestamos();
+        // 1. Obtener la lista de préstamos
+        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
 
+        // 2. Preparar la tabla
         DefaultTableModel modelo = (DefaultTableModel) tblCalculoHip.getModel();
-        modelo.setRowCount(0); // Limpiar tabla anterior
+        modelo.setRowCount(0); // Limpiar tabla
 
         for (Prestamo prestamo : prestamos.values()) {
 
-            double cuota = prestamo.calcularCuotaMensual();
+            if (prestamo instanceof PrestamoHipotecario) {
 
-            Object[] fila = new Object[]{
-                prestamo.getIdPrestamo(), 
-                String.format("$ %, .0f", prestamo.getMonto()),
-                prestamo.getTasaIntereses(), 
-                prestamo.getPlazoMeses(), 
-                String.format("$ %, .2f", cuota)   
-            };
-            modelo.addRow(fila);
+                PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
+
+                double cuota = hipo.calcularCuotaMensual();
+
+                Object[] fila = new Object[]{
+                    hipo.getIdPrestamo(),
+                    String.format("$ %, .0f", hipo.getMonto()),
+                    hipo.getTasaIntereses(),
+                    hipo.getPlazoMeses(),
+                    String.format("$ %, .2f", cuota)
+                };
+                modelo.addRow(fila);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

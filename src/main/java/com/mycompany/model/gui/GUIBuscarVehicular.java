@@ -53,7 +53,7 @@ public class GUIBuscarVehicular extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtNumeroMotor = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("ID del Prestamo: ");
 
@@ -187,7 +187,7 @@ public class GUIBuscarVehicular extends javax.swing.JFrame {
 
     private void btnBuscarVehicularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehicularActionPerformed
 
-        Prestamo prestamo = ServicioPrestamo.buscarPrestamo(Integer.parseInt(txtIdVehiculo.getText()));
+        Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(Integer.parseInt(txtIdVehiculo.getText()));
 
         if (prestamo != null) {
 

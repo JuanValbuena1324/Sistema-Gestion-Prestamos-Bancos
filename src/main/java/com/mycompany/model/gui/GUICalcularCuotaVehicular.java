@@ -5,6 +5,7 @@
 package com.mycompany.model.gui;
 
 import com.mycompany.model.Prestamo;
+import com.mycompany.model.PrestamoVehicular;
 import com.mycompany.model.services.ServicioPrestamo;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
@@ -84,25 +85,35 @@ public class GUICalcularCuotaVehicular extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    
-        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getPrestamos();
-    
-    DefaultTableModel modelo = (DefaultTableModel) tblCalculoVeh.getModel();
-    modelo.setRowCount(0); 
-    
-    for (Prestamo prestamo : prestamos.values()) {
-        
-        double cuota = prestamo.calcularCuotaMensual();
-        
-        Object[] fila = new Object[]{
-            prestamo.getIdPrestamo(),     
-            prestamo.getMonto(),          
-            prestamo.getTasaIntereses(), 
-            prestamo.getPlazoMeses(),   
-            cuota                         
-        };
-        modelo.addRow(fila);
-    }
+
+        // 1. Obtener la lista de préstamos
+        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
+        // 2. Preparar la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tblCalculoVeh.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        // 3. Recorrer TODOS, pero FILTRAR solo los vehiculares
+        for (Prestamo prestamo : prestamos.values()) {
+
+            if (prestamo instanceof PrestamoVehicular) {
+
+                // 4. Cast directo para acceder a datos específicos
+                PrestamoVehicular veh = (PrestamoVehicular) prestamo;
+
+                // 5. Calcular la cuota (sin seguro)
+                double cuota = veh.calcularCuotaMensual();
+
+                // 6. Agregar fila (5 columnas)
+                Object[] fila = new Object[]{
+                    veh.getIdPrestamo(),
+                    String.format("$ %, .0f", veh.getMonto()),
+                    veh.getTasaIntereses(),
+                    veh.getPlazoMeses(),
+                    String.format("$ %, .2f", cuota)
+                };
+                modelo.addRow(fila);
+            }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

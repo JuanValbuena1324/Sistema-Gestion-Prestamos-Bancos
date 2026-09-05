@@ -4,9 +4,8 @@
  */
 package com.mycompany.model.gui;
 
-import com.mycompany.model.Prestamo;
-import com.mycompany.model.PrestamoVehicular;
-import com.mycompany.model.services.ServicioPrestamo;
+import com.mycompany.model.TarjetaPropiedad;
+import com.mycompany.model.services.ServicioTarjetaPropiedad;
 import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,14 +13,15 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Juan Pablo Valbuena
  */
-public class GUIListarVehicular extends javax.swing.JFrame {
+public class GUIListarTarjeta extends javax.swing.JFrame {
 
     /**
-     * Creates new form GUIListarVehicular
+     * Creates new form GUIListarTarjeta
      */
-    public GUIListarVehicular() {
+    public GUIListarTarjeta() {
         initComponents();
         setLocationRelativeTo(this);
+
     }
 
     /**
@@ -34,29 +34,29 @@ public class GUIListarVehicular extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblListarVehicular = new javax.swing.JTable();
-        txtListar = new javax.swing.JButton();
+        tblTarjetas = new javax.swing.JTable();
+        btnListarTarjeta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GUI Listar Prestamo Vehicular");
+        setTitle("GUI Listar Tarjeta");
 
-        tblListarVehicular.setModel(new javax.swing.table.DefaultTableModel(
+        tblTarjetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "ID Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Registro", "Valor Comercial", "Marca Vehiculo", "Placa Vehiculo"
+                "Placa", "NumMotor"
             }
         ));
-        jScrollPane1.setViewportView(tblListarVehicular);
+        jScrollPane1.setViewportView(tblTarjetas);
 
-        txtListar.setText("Listar Prestamos Vehicular");
-        txtListar.addActionListener(new java.awt.event.ActionListener() {
+        btnListarTarjeta.setText("Listar Tarjetas de Propiedad");
+        btnListarTarjeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtListarActionPerformed(evt);
+                btnListarTarjetaActionPerformed(evt);
             }
         });
 
@@ -65,52 +65,41 @@ public class GUIListarVehicular extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtListar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(btnListarTarjeta)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(21, 21, 21)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtListar)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addComponent(btnListarTarjeta)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtListarActionPerformed
+    private void btnListarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTarjetaActionPerformed
+        // 1. Obtener la lista de tarjetas
+        Map<String, TarjetaPropiedad> tarjetas = ServicioTarjetaPropiedad.getInstance().getTarjetas();
 
-        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
+        // 2. Prepare la tabla
+        DefaultTableModel modelo = (DefaultTableModel) tblTarjetas.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
 
-        DefaultTableModel modelo = (DefaultTableModel) tblListarVehicular.getModel();
-        modelo.setRowCount(0);
-
-        for (Prestamo prestamo : prestamos.values()) {
-
-            if (prestamo instanceof PrestamoVehicular) {
-
-                PrestamoVehicular veh = (PrestamoVehicular) prestamo;
-
-                Object[] fila = new Object[]{
-                    veh.getIdPrestamo(),
-                    String.format("$ %, .0f", veh.getMonto()),
-                    veh.getTasaIntereses(),
-                    veh.getPlazoMeses(),
-                    veh.getFechaRegistro(),
-                    veh.getValorComercial(),
-                    veh.getMarcaVehiculo(),
-                    veh.getTarjetaPropiedad().getPlaca()
-                };
-                modelo.addRow(fila);
-            }
-        }
-    }//GEN-LAST:event_txtListarActionPerformed
+        // 3. Recorrer les tarjetas
+        for (TarjetaPropiedad tarjeta : tarjetas.values()) {
+            Object[] fila = new Object[]{
+                tarjeta.getPlaca(), // Columna 1: Placa
+                tarjeta.getNumMotor() // Columna 2: NumMotor
+            };
+            modelo.addRow(fila);
+        }    }//GEN-LAST:event_btnListarTarjetaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,27 +118,27 @@ public class GUIListarVehicular extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIListarVehicular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIListarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIListarVehicular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIListarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIListarVehicular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIListarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIListarVehicular.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIListarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIListarVehicular().setVisible(true);
+                new GUIListarTarjeta().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnListarTarjeta;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblListarVehicular;
-    private javax.swing.JButton txtListar;
+    private javax.swing.JTable tblTarjetas;
     // End of variables declaration//GEN-END:variables
 }
