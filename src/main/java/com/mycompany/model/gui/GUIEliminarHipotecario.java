@@ -55,6 +55,7 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
         jLabel1.setText("ID del Prestamo:");
 
         btnEliminarHipotecario.setText("Eliminar Prestamo Hipotecario");
+        btnEliminarHipotecario.setEnabled(false);
         btnEliminarHipotecario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarHipotecarioActionPerformed(evt);
@@ -165,7 +166,6 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarHipotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarHipotecarioActionPerformed
-
 // Valida que se haya buscado el préstamo antes
         if (txtMonto.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Primero debe Buscar el préstamo antes de eliminar");
@@ -174,7 +174,7 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
 
         try {
             int id = Integer.parseInt(txtIdPrestamoHipotecario.getText());
-            
+
             Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(id);
 
             if (prestamo != null) {
@@ -194,24 +194,30 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
                         txtFecha.setText("");
                         txtTipo.setText("");
                         txtDireccion.setText("");
+
+                        // DESHABILITAR EL BOTÓN DESPUÉS DE ELIMINAR
+                        btnEliminarHipotecario.setEnabled(false);
                     } else {
                         JOptionPane.showMessageDialog(this, "Préstamo Hipotecario no Encontrado/Registrado");
+                        btnEliminarHipotecario.setEnabled(false);
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Vehicular. Vaya a la GUI de eliminar vehicular.");
+                    btnEliminarHipotecario.setEnabled(false);
                 }
 
             } else {
                 JOptionPane.showMessageDialog(this, "No se Encontró ese Préstamo Hipotecario");
+                btnEliminarHipotecario.setEnabled(false);
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
+            btnEliminarHipotecario.setEnabled(false);
         }
     }//GEN-LAST:event_btnEliminarHipotecarioActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
         if (txtIdPrestamoHipotecario.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "El Campo de ID del Préstamo es obligatorio");
             return;
@@ -219,9 +225,8 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
 
         try {
             int id = Integer.parseInt(txtIdPrestamoHipotecario.getText());
-            
-            Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(Integer.parseInt(txtIdPrestamoHipotecario.getText()));
 
+            Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(id);
 
             if (prestamo != null) {
 
@@ -237,18 +242,23 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
                     txtDireccion.setText(hipo.getDireccionInmueble());
 
                     JOptionPane.showMessageDialog(this, "Préstamo Hipotecario encontrado! \nAhora puede eliminar.");
+
+                    // HABILITAR EL BOTÓN ELIMINAR
+                    btnEliminarHipotecario.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Vehicular. Vaya a la GUI de eliminar vehicular.");
+                    btnEliminarHipotecario.setEnabled(false);
                 }
 
             } else {
                 JOptionPane.showMessageDialog(this, "No se Encontró ese Préstamo Hipotecario");
+                btnEliminarHipotecario.setEnabled(false);
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+            btnEliminarHipotecario.setEnabled(false);
         }
-
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 

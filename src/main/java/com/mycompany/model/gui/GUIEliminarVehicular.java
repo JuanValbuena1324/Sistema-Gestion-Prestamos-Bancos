@@ -34,7 +34,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txtIdVehicular = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnEliminarVeh = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -58,10 +58,11 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
 
         jLabel1.setText("ID del Prestamo:");
 
-        jButton1.setText("Eliminar Prestamo Vehicular");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminarVeh.setText("Eliminar Prestamo Vehicular");
+        btnEliminarVeh.setEnabled(false);
+        btnEliminarVeh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEliminarVehActionPerformed(evt);
             }
         });
 
@@ -144,7 +145,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
                 .addContainerGap(95, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addGap(27, 27, 27)
-                .addComponent(jButton1)
+                .addComponent(btnEliminarVeh)
                 .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
@@ -188,7 +189,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
                     .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnEliminarVeh)
                     .addComponent(btnBuscar))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -196,7 +197,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEliminarVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVehActionPerformed
 
         // Valida que se haya buscado el préstamo antes (los campos están llenos)
         if (txtMonto.getText().equals("")) {
@@ -206,7 +207,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
 
         try {
             int id = Integer.parseInt(txtIdVehicular.getText());
-            
+
             Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(id);
 
             if (prestamo != null) {
@@ -228,21 +229,29 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
                         txtMarca.setText("");
                         txtPlaca.setText("");
                         txtNumero.setText("");
+
+                        // DESHABILITAR EL BOTÓN DESPUÉS DE ELIMINAR
+                        btnEliminarVeh.setEnabled(false);
+
                     } else {
                         JOptionPane.showMessageDialog(this, "Préstamo Vehicular no Encontrado/Registrado");
+                        btnEliminarVeh.setEnabled(false);
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Hipotecario. Vaya a la GUI de eliminar hipotecario.");
+                    btnEliminarVeh.setEnabled(false);
                 }
 
             } else {
                 JOptionPane.showMessageDialog(this, "No se Encontró ese Préstamo Vehicular");
+                btnEliminarVeh.setEnabled(false);
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
+            btnEliminarVeh.setEnabled(false);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEliminarVehActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
@@ -253,7 +262,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
 
         try {
             int id = Integer.parseInt(txtIdVehicular.getText());
-            
+
             Prestamo prestamo = ServicioPrestamo.getInstance().buscarPrestamo(Integer.parseInt(txtIdVehicular.getText()));
 
             if (prestamo != null) {
@@ -274,16 +283,24 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
                     txtNumero.setText(veh.getTarjetaPropiedad().getNumMotor());
 
                     JOptionPane.showMessageDialog(this, "Préstamo Vehicular encontrado! \nAhora puede eliminar.");
+
+                    // HABILITAR EL BOTÓN ELIMINAR
+                    btnEliminarVeh.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Hipotecario. Vaya a la GUI de eliminar hipotecario.");
+                    btnEliminarVeh.setEnabled(false);
                 }
 
             } else {
                 JOptionPane.showMessageDialog(this, "No se Encontró ese Préstamo Vehicular");
+                btnEliminarVeh.setEnabled(false);
+
             }
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
+            btnEliminarVeh.setEnabled(false);
+
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -324,7 +341,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnEliminarVeh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

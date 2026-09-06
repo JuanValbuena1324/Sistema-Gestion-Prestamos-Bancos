@@ -4,24 +4,20 @@
  */
 package com.mycompany.model.gui;
 
-import com.mycompany.model.Prestamo;
-import com.mycompany.model.PrestamoVehicular;
 import com.mycompany.model.TarjetaPropiedad;
-import com.mycompany.model.services.ServicioPrestamo;
 import com.mycompany.model.services.ServicioTarjetaPropiedad;
-import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Juan Pablo Valbuena
  */
-public class GUIEliminarTarjeta extends javax.swing.JFrame {
+public class GUIActualizarTarjeta extends javax.swing.JFrame {
 
     /**
-     * Creates new form GUIEliminarTarjeta
+     * Creates new form GUIActualizarTarjeta
      */
-    public GUIEliminarTarjeta() {
+    public GUIActualizarTarjeta() {
         initComponents();
         setLocationRelativeTo(this);
 
@@ -40,30 +36,28 @@ public class GUIEliminarTarjeta extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtPlaca = new javax.swing.JTextField();
         txtNumMotor = new javax.swing.JTextField();
-        btnBuscarTarjeta = new javax.swing.JButton();
-        btnEliminarTarjeta = new javax.swing.JButton();
+        btnActualizarTarjeta = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("GUI Eliminar Tarjeta");
+        setTitle("GUI Actualizar Tarjeta");
 
         jLabel1.setText("Placa:");
 
         jLabel2.setText("NumMotor:");
 
-        txtNumMotor.setEditable(false);
-
-        btnBuscarTarjeta.setText("Buscar");
-        btnBuscarTarjeta.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizarTarjeta.setText("Actualizar Tarjeta Propiedad");
+        btnActualizarTarjeta.setEnabled(false);
+        btnActualizarTarjeta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarTarjetaActionPerformed(evt);
+                btnActualizarTarjetaActionPerformed(evt);
             }
         });
 
-        btnEliminarTarjeta.setText("Eliminar Tarjeta de Propiedad");
-        btnEliminarTarjeta.setEnabled(false);
-        btnEliminarTarjeta.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarTarjetaActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -73,25 +67,25 @@ public class GUIEliminarTarjeta extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizarTarjeta))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(31, 31, 31)
+                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPlaca, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                            .addComponent(txtNumMotor)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBuscarTarjeta)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
-                        .addComponent(btnEliminarTarjeta)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                            .addComponent(txtPlaca)
+                            .addComponent(txtNumMotor, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -101,90 +95,60 @@ public class GUIEliminarTarjeta extends javax.swing.JFrame {
                     .addComponent(txtNumMotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminarTarjeta)
-                    .addComponent(btnBuscarTarjeta))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(btnActualizarTarjeta)
+                    .addComponent(btnBuscar))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnBuscarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarTarjetaActionPerformed
-
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (txtPlaca.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "El Campo de Placa es obligatorio");
             return;
         }
-
         try {
             TarjetaPropiedad tarjeta = ServicioTarjetaPropiedad.getInstance().buscarTarjetaPropiedad(txtPlaca.getText());
-
             if (tarjeta != null) {
                 txtNumMotor.setText(tarjeta.getNumMotor());
                 JOptionPane.showMessageDialog(this, "Tarjeta encontrada!");
 
-                // HABILITAR EL BOTÓN ELIMINAR
-                btnEliminarTarjeta.setEnabled(true);
+                // HABILITAR EL BOTÓN ACTUALIZAR
+                btnActualizarTarjeta.setEnabled(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Tarjeta no encontrada.");
-                btnEliminarTarjeta.setEnabled(false);
+                btnActualizarTarjeta.setEnabled(false);
             }
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al buscar: " + e.getMessage());
-            btnEliminarTarjeta.setEnabled(false);
-        }
-    }//GEN-LAST:event_btnBuscarTarjetaActionPerformed
+        }    }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnEliminarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarTarjetaActionPerformed
-
-        // Valida que se haya buscado el objeto
+    private void btnActualizarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarTarjetaActionPerformed
+        // Valida que ya se haya buscado el objeto
         if (txtNumMotor.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Primero debe Buscar la tarjeta antes de eliminar");
+            JOptionPane.showMessageDialog(this, "Primero debe Buscar la tarjeta antes de actualizar");
             return;
         }
-
         try {
             String placa = txtPlaca.getText();
-            // Verificar si hay préstamo vehicular asociado
-            boolean hayPrestamoAsociado = false;
-            Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
-            for (Prestamo prestamo : prestamos.values()) {
-                if (prestamo instanceof PrestamoVehicular) {
-                    PrestamoVehicular veh = (PrestamoVehicular) prestamo;
-                    if (veh.getTarjetaPropiedad().getPlaca().equals(placa)) {
-                        hayPrestamoAsociado = true;
-                        break;
-                    }
-                }
-            }
+            String nuevoNumeroMotor = txtNumMotor.getText();
 
-            // 3. Si hay préstamo asociado, no permitir la eliminación
-            if (hayPrestamoAsociado) {
-                JOptionPane.showMessageDialog(this, "Esta tarjeta está asociada a un Préstamo Vehicular. \nNo se puede eliminar.");
-                return;
-            }
-
-            // 4. Eliminar (si no hay préstamo asociado)
-            boolean centinela = ServicioTarjetaPropiedad.getInstance().eliminarTarjetaPropiedad(placa);
+            boolean centinela = ServicioTarjetaPropiedad.getInstance().actualizarTarjetaPropiedad(placa, nuevoNumeroMotor);
 
             if (centinela) {
-                JOptionPane.showMessageDialog(this, "Tarjeta de Propiedad Eliminada con Éxito");
+                JOptionPane.showMessageDialog(this, "Tarjeta de Propiedad Actualizada con Éxito");
                 txtPlaca.setText("");
                 txtNumMotor.setText("");
 
-                // DESHABILITAR EL BOTÓN DESPUÉS DE ELIMINAR
-                btnEliminarTarjeta.setEnabled(false);
+                // DESHABILITAR EL BOTÓN DESPUÉS DE ACTUALIZAR
+                btnActualizarTarjeta.setEnabled(false);
             } else {
-                JOptionPane.showMessageDialog(this, "Tarjeta de Propiedad no Encontrada/Registrada");
-                btnEliminarTarjeta.setEnabled(false);
+                JOptionPane.showMessageDialog(this, "Tarjeta no Encontrada/Registrada");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar: " + e.getMessage());
-            btnEliminarTarjeta.setEnabled(false);
-        }
-
-    }//GEN-LAST:event_btnEliminarTarjetaActionPerformed
+            JOptionPane.showMessageDialog(this, "Error al actualizar: " + e.getMessage());
+        }    }//GEN-LAST:event_btnActualizarTarjetaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,27 +167,27 @@ public class GUIEliminarTarjeta extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GUIEliminarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIActualizarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GUIEliminarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIActualizarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GUIEliminarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIActualizarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GUIEliminarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(GUIActualizarTarjeta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GUIEliminarTarjeta().setVisible(true);
+                new GUIActualizarTarjeta().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarTarjeta;
-    private javax.swing.JButton btnEliminarTarjeta;
+    private javax.swing.JButton btnActualizarTarjeta;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField txtNumMotor;

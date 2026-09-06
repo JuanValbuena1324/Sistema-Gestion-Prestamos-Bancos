@@ -42,13 +42,13 @@ public class GUIListarVehicular extends javax.swing.JFrame {
 
         tblListarVehicular.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Registro", "Valor Comercial", "Marca Vehiculo", "Placa Vehiculo"
+                "ID Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Registro", "Valor Comercial", "Marca Vehiculo", "Placa Vehiculo", "NumMotor"
             }
         ));
         jScrollPane1.setViewportView(tblListarVehicular);
@@ -65,20 +65,20 @@ public class GUIListarVehicular extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtListar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 840, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(txtListar)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -103,9 +103,11 @@ public class GUIListarVehicular extends javax.swing.JFrame {
                     veh.getTasaIntereses(),
                     veh.getPlazoMeses(),
                     veh.getFechaRegistro(),
-                    veh.getValorComercial(),
+                    String.format("$ %, .0f", veh.getValorComercial()),
                     veh.getMarcaVehiculo(),
-                    veh.getTarjetaPropiedad().getPlaca()
+                    veh.getTarjetaPropiedad().getPlaca(),
+                    veh.getTarjetaPropiedad().getNumMotor()
+                      
                 };
                 modelo.addRow(fila);
             }

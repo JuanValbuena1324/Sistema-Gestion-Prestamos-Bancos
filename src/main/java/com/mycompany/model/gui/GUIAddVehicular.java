@@ -4,12 +4,14 @@
  */
 package com.mycompany.model.gui;
 
+import com.mycompany.model.Prestamo;
 import com.mycompany.model.PrestamoVehicular;
 import com.mycompany.model.services.ServicioPrestamo;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import com.mycompany.model.TarjetaPropiedad;
 import com.mycompany.model.services.ServicioTarjetaPropiedad;
+import java.util.Map;
 
 /**
  *
@@ -77,6 +79,7 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         });
 
         btnCrearPrestamoVeh.setText("Crear Prestamo Vehicular");
+        btnCrearPrestamoVeh.setEnabled(false);
         btnCrearPrestamoVeh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearPrestamoVehActionPerformed(evt);
@@ -102,44 +105,45 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnSeleccionarTarjeta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCrearPrestamoVeh)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtNumeroMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addComponent(btnSeleccionarTarjeta)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCrearPrestamoVeh))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtValorComercial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                            .addComponent(txtIdVehicular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                            .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTasaInteres, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtPlazoMeses, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(97, Short.MAX_VALUE))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtNumeroMotor, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtPlacaVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtValorComercial, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                    .addComponent(txtIdVehicular, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                                    .addComponent(txtMonto, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTasaInteres, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtPlazoMeses, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                .addComponent(txtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +200,7 @@ public class GUIAddVehicular extends javax.swing.JFrame {
 
     private void btnCrearPrestamoVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPrestamoVehActionPerformed
 
-        // Valida que ya exista la tarjeta (o que esté lleno el campo)
+// Valida que ya exista la tarjeta (o que esté lleno el campo)
         if (txtNumeroMotor.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Préstamo no creado. Tarjeta no encontrada. Debe buscar o crear la tarjeta de propiedad primero.");
             return;
@@ -227,18 +231,39 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                     return;
                 }
 
-                // 4. Crear el préstamo con la tarjeta existente
+                // 4. VALIDACIÓN CRÍTICA: Verificar si la tarjeta ya está asociada a OTRO préstamo
+                boolean tarjetaYaUsada = false;
+                Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
+                for (Prestamo prestamo : prestamos.values()) {
+                    if (prestamo instanceof PrestamoVehicular) {
+                        PrestamoVehicular veh = (PrestamoVehicular) prestamo;
+                        if (veh.getTarjetaPropiedad().getPlaca().equals(txtPlacaVehiculo.getText().trim())) {
+                            tarjetaYaUsada = true;
+                            break;
+                        }
+                    }
+                }
+
+                // 5. Si la tarjeta ya está usada, BLOQUEAR la creación
+                if (tarjetaYaUsada) {
+                    JOptionPane.showMessageDialog(this, "Esta Tarjeta de Propiedad (Placa) ya está asociada a otro Préstamo Vehicular. No se puede crear un nuevo préstamo.");
+                    txtPlacaVehiculo.setText("");
+                    txtNumeroMotor.setText("");
+                    return;
+                }
+
+                // 6. Crear el préstamo con la tarjeta existente
                 PrestamoVehicular prestamo = new PrestamoVehicular(
                         idPrestamo, monto, tasaIntereses, plazoMeses, fechaRegistro,
                         valorComercial, marcaVehiculo, tarjeta
                 );
 
-                // 5. Guardar préstamo en ServicioPrestamo
+                // 7. Guardar préstamo en ServicioPrestamo
                 ServicioPrestamo.getInstance().addPrestamo(prestamo);
 
                 JOptionPane.showMessageDialog(this, "Préstamo Vehicular creado!");
 
-                // 6. Limpiar campos
+                // 8. Limpiar campos
                 txtIdVehicular.setText("");
                 txtMonto.setText("");
                 txtTasaInteres.setText("");
@@ -258,7 +283,6 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al crear préstamo: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnCrearPrestamoVehActionPerformed
 
     private void btnSeleccionarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarTarjetaActionPerformed
@@ -275,7 +299,7 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         } else {
             // Si no existe: BLOQUEA la creación y muestra el mensaje
             txtNumeroMotor.setText("");
-            JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Debe crear la Tarjeta de Propiedad en el panel de Adicionar Tarjeta de Propiedad antes de crear el Préstamo Vehicular.");
+            JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Debe crear la Tarjeta en el panel de Adicionar Tarjeta antes de crear el Préstamo Vehicular.");
             btnCrearPrestamoVeh.setEnabled(false); // Deshabilita el botón de crear préstamo
         }
     }//GEN-LAST:event_btnSeleccionarTarjetaActionPerformed
