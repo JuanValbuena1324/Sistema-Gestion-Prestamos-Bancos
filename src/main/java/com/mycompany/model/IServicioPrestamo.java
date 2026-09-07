@@ -11,21 +11,21 @@ import java.util.Map;
  *
  * @author Juan Pablo Valbuena
  */
-
 // Contrato que define los métodos de gestión de préstamos
 public interface IServicioPrestamo {
 
-        // Método para obtener la lista de préstamos
-        Map<Integer, Prestamo> getPrestamos();
+    // Método para obtener la lista de préstamos
+    Map<Integer, Prestamo> getPrestamos();
 
-        // Método para adicionar/crear un préstamo
-        void addPrestamo(Prestamo prestamo);
+    // Método para adicionar/crear un préstamo
+    void addPrestamo(Prestamo prestamo);
 
-        // Método para buscar un préstamo por ID
-        Prestamo buscarPrestamo(int id);
+    // Método para buscar un préstamo por ID
+    Prestamo buscarPrestamo(int id);
 
-        // Método para eliminar un préstamo por ID
-        boolean eliminarPrestamo(int id);
+    // Método para eliminar un préstamo por ID
+    boolean eliminarPrestamo(int id);
+
+    boolean actualizarPrestamo(int id, double nuevoMonto, int nuevoPlazo, String nuevoTipoInmueble, double nuevoValorComercial);
 
 }
-

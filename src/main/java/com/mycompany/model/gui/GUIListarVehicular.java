@@ -4,6 +4,7 @@
  */
 package com.mycompany.model.gui;
 
+import com.mycompany.model.ICambiable;
 import com.mycompany.model.Prestamo;
 import com.mycompany.model.PrestamoVehicular;
 import com.mycompany.model.services.ServicioPrestamo;
@@ -14,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Juan Pablo Valbuena
  */
-public class GUIListarVehicular extends javax.swing.JFrame {
+public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable {
 
     /**
      * Creates new form GUIListarVehicular
@@ -22,6 +23,8 @@ public class GUIListarVehicular extends javax.swing.JFrame {
     public GUIListarVehicular() {
         initComponents();
         setLocationRelativeTo(this);
+        ServicioPrestamo.getInstance().addGUI(this); // Suscribirse al Observer
+
     }
 
     /**
@@ -39,6 +42,11 @@ public class GUIListarVehicular extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GUI Listar Prestamo Vehicular");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         tblListarVehicular.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,12 +115,16 @@ public class GUIListarVehicular extends javax.swing.JFrame {
                     veh.getMarcaVehiculo(),
                     veh.getTarjetaPropiedad().getPlaca(),
                     veh.getTarjetaPropiedad().getNumMotor()
-                      
+
                 };
                 modelo.addRow(fila);
             }
         }
     }//GEN-LAST:event_txtListarActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        ServicioPrestamo.getInstance().delGUI(this); // Desuscribirse del Observer
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -147,6 +159,35 @@ public class GUIListarVehicular extends javax.swing.JFrame {
                 new GUIListarVehicular().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void cambio() {
+        // 1. Obtener la lista de préstamos
+        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
+
+        // 2. Llenar la tabla (la misma lógica que el botón "Listar")
+        DefaultTableModel modelo = (DefaultTableModel) tblListarVehicular.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        for (Prestamo prestamo : prestamos.values()) {
+            if (prestamo instanceof PrestamoVehicular) {
+                PrestamoVehicular veh = (PrestamoVehicular) prestamo;
+                Object[] fila = new Object[]{
+                    veh.getIdPrestamo(),
+                    veh.getMonto(),
+                    veh.getTasaIntereses(),
+                    veh.getPlazoMeses(),
+                    veh.getFechaRegistro(),
+                    veh.getValorComercial(),
+                    veh.getMarcaVehiculo(),
+                    veh.getTarjetaPropiedad().getPlaca(),
+                    veh.getTarjetaPropiedad().getNumMotor()
+                        
+                };
+                modelo.addRow(fila);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -167,8 +167,9 @@ public class GUIActualizarHipotecario extends javax.swing.JFrame {
             int nuevoPlazo = Integer.parseInt(txtPlazo.getText());
             String nuevoTipo = txtTipo.getText();
 
-            boolean centinela = ServicioPrestamo.getInstance().actualizarPrestamo(id, nuevoMonto, nuevoPlazo);
-
+            boolean centinela = ServicioPrestamo.getInstance().actualizarPrestamo(
+                    id, nuevoMonto, nuevoPlazo, nuevoTipo, 0 // El "0" es para el valorComercial (no aplica a hipotecario)
+            );
             if (centinela) {
                 // Actualizar tipo de inmueble (usando setter directo)
                 PrestamoHipotecario hipo = (PrestamoHipotecario) ServicioPrestamo.getInstance().buscarPrestamo(id);

@@ -4,6 +4,7 @@
  */
 package com.mycompany.model.gui;
 
+import com.mycompany.model.ICambiable;
 import com.mycompany.model.Prestamo;
 import com.mycompany.model.PrestamoHipotecario;
 import com.mycompany.model.services.ServicioPrestamo;
@@ -14,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Juan Pablo Valbuena
  */
-public class GUIListarHipotecario extends javax.swing.JFrame {
+public class GUIListarHipotecario extends javax.swing.JFrame implements ICambiable {
 
     /**
      * Creates new form GUIListarHipotecario
@@ -22,6 +23,8 @@ public class GUIListarHipotecario extends javax.swing.JFrame {
     public GUIListarHipotecario() {
         initComponents();
         setLocationRelativeTo(this);
+        ServicioPrestamo.getInstance().addGUI(this); // Suscribirse al Observer
+
     }
 
     /**
@@ -39,6 +42,11 @@ public class GUIListarHipotecario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GUI Listar Prestamo Hipotecario");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         tblListarHipotecario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +95,7 @@ public class GUIListarHipotecario extends javax.swing.JFrame {
     private void btnListarHipotecarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarHipotecarioActionPerformed
 
         Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
-        
+
         DefaultTableModel modelo = (DefaultTableModel) tblListarHipotecario.getModel();
         modelo.setRowCount(0);
 
@@ -110,6 +118,10 @@ public class GUIListarHipotecario extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnListarHipotecarioActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        ServicioPrestamo.getInstance().delGUI(this); // Desuscribirse del Observer
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -144,6 +156,32 @@ public class GUIListarHipotecario extends javax.swing.JFrame {
                 new GUIListarHipotecario().setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void cambio() {
+        // 1. Obtener la lista de préstamos
+        Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
+
+        // 2. Llenar la tabla (la misma lógica que el botón "Listar")
+        DefaultTableModel modelo = (DefaultTableModel) tblListarHipotecario.getModel();
+        modelo.setRowCount(0); // Limpiar tabla
+
+        for (Prestamo prestamo : prestamos.values()) {
+            if (prestamo instanceof PrestamoHipotecario) {
+                PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
+                Object[] fila = new Object[]{
+                    hipo.getIdPrestamo(),
+                    hipo.getMonto(),
+                    hipo.getTasaIntereses(),
+                    hipo.getPlazoMeses(),
+                    hipo.getFechaRegistro(),
+                    hipo.getTipoInmueble(),
+                    hipo.getDireccionInmueble()
+                };
+                modelo.addRow(fila);
+            }
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

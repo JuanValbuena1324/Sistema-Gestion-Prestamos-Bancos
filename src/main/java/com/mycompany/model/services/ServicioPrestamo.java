@@ -4,8 +4,12 @@
  */
 package com.mycompany.model.services;
 
+import com.mycompany.model.ICambiable;
 import com.mycompany.model.IServicioPrestamo;
 import com.mycompany.model.Prestamo;
+import com.mycompany.model.PrestamoHipotecario;
+import com.mycompany.model.PrestamoVehicular;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,47 +19,99 @@ import java.util.Map;
  */
 public class ServicioPrestamo implements IServicioPrestamo {
 
-    // 1. INSTANCIA ÚNICA (Estática y privada)
+    // SINGLETON - INSTANCIA ÚNICA (Estática y privada)
     private static ServicioPrestamo instancia;
 
-    // 2. COLECCIÓN DE DATOS (Ya no es estática, es de instancia)
+    // COLECCIÓN DE DATOS (Ya no es estática, es de instancia)
     private Map<Integer, Prestamo> prestamos;
 
-    // 3. MÉTODOS DE INSTANCIA (Ya no son estáticos)
+    // OBSERVER
+    private ArrayList<ICambiable> guisPrestamos;
+
+    // MÉTODOS DE INSTANCIA (Ya no son estáticos)
     @Override
     public Map<Integer, Prestamo> getPrestamos() {
         return Map.copyOf(prestamos);
     }
 
-    // 4. CONSTRUCTOR PRIVADO (Evita que se creen instancias externas)
+    // CONSTRUCTOR PRIVADO (Evita que se creen instancias externas)
     private ServicioPrestamo() {
         this.prestamos = new HashMap<>();
+        this.guisPrestamos = new ArrayList<>(); //INICIALIZAR OBSERVER
     }
 
-    // 5. MÉTODO DE ACCESO A LA INSTANCIA ÚNICA
+    // MÉTODO DE ACCESO A LA INSTANCIA ÚNICA
     public static ServicioPrestamo getInstance() {
         if (instancia == null) {
             instancia = new ServicioPrestamo();
         }
         return instancia;
     }
-    
+
+    // OBSERVER: Métodos de Suscripción
+    public void addGUI(ICambiable gui) {
+        guisPrestamos.add(gui);
+
+    }
+
+    public void delGUI(ICambiable gui) {
+        guisPrestamos.remove(gui);
+    }
+
+    // OBSERVER: Método de Notificación
+    private void notificar() {
+        for (ICambiable gui : guisPrestamos) {
+            gui.cambio();
+        }
+    }
+
     @Override
     public void addPrestamo(Prestamo prestamo) {
         prestamos.put(prestamo.getIdPrestamo(), prestamo);
+        notificar(); // Notifica a GUIs de Listar
+
     }
-    
+
     @Override
     public Prestamo buscarPrestamo(int id) {
         return prestamos.get(id);
     }
-    
+
     @Override
     public boolean eliminarPrestamo(int id) {
         if (prestamos.containsKey(id)) {
             prestamos.remove(id);
+            notificar(); // Notifica a GUIs de Listar
             return true;
         }
         return false;
     }
+
+    // Método para actualizar los datos permitidos de un préstamo
+    @Override
+    public boolean actualizarPrestamo(int id, double nuevoMonto, int nuevoPlazo, String nuevoTipoInmueble, double nuevoValorComercial) {
+        Prestamo prestamo = prestamos.get(id);
+        if (prestamo != null) {
+
+            // 1. Actualizar los atributos comunes (del padre)
+            prestamo.setMonto(nuevoMonto);
+            prestamo.setPlazoMeses(nuevoPlazo);
+
+            // 2. Actualizar los atributos propios (de las hijas) - Dependiendo del tipo
+            if (prestamo instanceof PrestamoHipotecario) {
+                PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
+                hipo.setTipoInmueble(nuevoTipoInmueble);
+            } else if (prestamo instanceof PrestamoVehicular) {
+                PrestamoVehicular veh = (PrestamoVehicular) prestamo;
+                veh.setValorComercial(nuevoValorComercial);
+            }
+
+            // 3. Notificar a las GUIs de Listar (¡Este es el paso clave!)
+            notificar();
+
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -12,7 +12,6 @@ import java.util.Map;
  *
  * @author Juan Pablo Valbuena
  */
-
 public class ServicioTarjetaPropiedad {
 
     // SINGLETON
@@ -50,6 +49,16 @@ public class ServicioTarjetaPropiedad {
     public boolean eliminarTarjetaPropiedad(String placa) {
         if (tarjetas.containsKey(placa)) {
             tarjetas.remove(placa);
+            return true;
+        }
+        return false;
+    }
+
+    // Método para actualizar el número de motor de una tarjeta
+    public boolean actualizarTarjetaPropiedad(String placa, String nuevoNumeroMotor) {
+        TarjetaPropiedad tarjeta = tarjetas.get(placa);
+        if (tarjeta != null) {
+            tarjeta.setNumMotor(nuevoNumeroMotor);
             return true;
         }
         return false;

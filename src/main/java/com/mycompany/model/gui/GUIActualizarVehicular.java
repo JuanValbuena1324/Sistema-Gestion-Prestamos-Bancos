@@ -175,8 +175,9 @@ public class GUIActualizarVehicular extends javax.swing.JFrame {
             int nuevoPlazo = Integer.parseInt(txtPlazo.getText());
             double nuevoValorComercial = Double.parseDouble(txtValor.getText());
 
-            boolean centinela = ServicioPrestamo.getInstance().actualizarPrestamo(id, nuevoMonto, nuevoPlazo);
-
+            boolean centinela = ServicioPrestamo.getInstance().actualizarPrestamo(
+                    id, nuevoMonto, nuevoPlazo, "", nuevoValorComercial // El "" es para el tipoInmueble (no aplica a vehicular)
+            );
             if (centinela) {
                 // Actualizar valor comercial (usando setter directo)
                 PrestamoVehicular veh = (PrestamoVehicular) ServicioPrestamo.getInstance().buscarPrestamo(id);
