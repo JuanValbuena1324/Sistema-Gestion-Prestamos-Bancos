@@ -200,14 +200,12 @@ public class GUIAddVehicular extends javax.swing.JFrame {
 
     private void btnCrearPrestamoVehActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPrestamoVehActionPerformed
 
-// Valida que ya exista la tarjeta (o que esté lleno el campo)
         if (txtNumeroMotor.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Préstamo no creado. Tarjeta no encontrada. Debe buscar o crear la tarjeta de propiedad primero.");
             return;
         }
 
         try {
-            // 1. Capturar los datos del préstamo (sin la fecha manual)
             int idPrestamo = Integer.parseInt(txtIdVehicular.getText().trim());
             double monto = Double.parseDouble(txtMonto.getText().trim());
             double tasaIntereses = Double.parseDouble(txtTasaInteres.getText().trim());
@@ -215,15 +213,12 @@ public class GUIAddVehicular extends javax.swing.JFrame {
             double valorComercial = Double.parseDouble(txtValorComercial.getText().trim());
             String marcaVehiculo = txtMarca.getText().trim();
 
-            // 2. Capturar la fecha desde el JDateChooser
             java.util.Date fechaUtil = jDateChooser1.getDate();
             if (fechaUtil != null) {
-                // Convertir de java.util.Date a LocalDate
                 LocalDate fechaRegistro = fechaUtil.toInstant()
                         .atZone(java.time.ZoneId.systemDefault())
                         .toLocalDate();
 
-                // 3. Buscar la tarjeta existente
                 TarjetaPropiedad tarjeta = ServicioTarjetaPropiedad.getInstance().buscarTarjetaPropiedad(txtPlacaVehiculo.getText().trim());
 
                 if (tarjeta == null) {
@@ -231,7 +226,11 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                     return;
                 }
 
-                // 4. VALIDACIÓN CRÍTICA: Verificar si la tarjeta ya está asociada a OTRO préstamo
+                if (!tarjeta.getEstado().equals("AC")) {
+                    JOptionPane.showMessageDialog(this, "Esta Tarjeta de Propiedad está INACTIVA (IN). No se puede crear un préstamo con esta tarjeta.");
+                    return;
+                }
+
                 boolean tarjetaYaUsada = false;
                 Map<Integer, Prestamo> prestamos = ServicioPrestamo.getInstance().getPrestamos();
                 for (Prestamo prestamo : prestamos.values()) {
@@ -243,27 +242,19 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                         }
                     }
                 }
-
-                // 5. Si la tarjeta ya está usada, BLOQUEAR la creación
                 if (tarjetaYaUsada) {
                     JOptionPane.showMessageDialog(this, "Esta Tarjeta de Propiedad (Placa) ya está asociada a otro Préstamo Vehicular. No se puede crear un nuevo préstamo.");
-                    txtPlacaVehiculo.setText("");
-                    txtNumeroMotor.setText("");
                     return;
                 }
-
-                // 6. Crear el préstamo con la tarjeta existente
                 PrestamoVehicular prestamo = new PrestamoVehicular(
                         idPrestamo, monto, tasaIntereses, plazoMeses, fechaRegistro,
                         valorComercial, marcaVehiculo, tarjeta
                 );
 
-                // 7. Guardar préstamo en ServicioPrestamo
                 ServicioPrestamo.getInstance().addPrestamo(prestamo);
 
                 JOptionPane.showMessageDialog(this, "Préstamo Vehicular creado!");
 
-                // 8. Limpiar campos
                 txtIdVehicular.setText("");
                 txtMonto.setText("");
                 txtTasaInteres.setText("");
@@ -272,9 +263,9 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                 txtMarca.setText("");
                 txtPlacaVehiculo.setText("");
                 txtNumeroMotor.setText("");
-                jDateChooser1.setDate(null); // Limpiar el calendario
+                jDateChooser1.setDate(null); 
 
-                btnCrearPrestamoVeh.setEnabled(false); // Deshabilita botón después de crear
+                btnCrearPrestamoVeh.setEnabled(false); 
 
             } else {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.");
@@ -283,6 +274,7 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al crear préstamo: " + e.getMessage());
         }
+
     }//GEN-LAST:event_btnCrearPrestamoVehActionPerformed
 
     private void btnSeleccionarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarTarjetaActionPerformed
@@ -292,15 +284,18 @@ public class GUIAddVehicular extends javax.swing.JFrame {
         TarjetaPropiedad tarjeta = ServicioTarjetaPropiedad.getInstance().buscarTarjetaPropiedad(placa);
 
         if (tarjeta != null) {
-            // Si existe: llena el campo del motor y habilita la creación
-            txtNumeroMotor.setText(tarjeta.getNumMotor());
-            JOptionPane.showMessageDialog(this, "Tarjeta encontrada!");
-            btnCrearPrestamoVeh.setEnabled(true); // Habilita el botón de crear préstamo
+            if (tarjeta.getEstado().equals("AC")) {
+                txtNumeroMotor.setText(tarjeta.getNumMotor());
+                JOptionPane.showMessageDialog(this, "Tarjeta encontrada! (Activa)");
+                btnCrearPrestamoVeh.setEnabled(true);
+            } else {
+                txtNumeroMotor.setText("");
+                JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Estado: INACTIVO (IN). Debe crear una nueva tarjeta o reactivar la existente.");
+                btnCrearPrestamoVeh.setEnabled(false);
+            }
         } else {
-            // Si no existe: BLOQUEA la creación y muestra el mensaje
-            txtNumeroMotor.setText("");
-            JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Debe crear la Tarjeta en el panel de Adicionar Tarjeta antes de crear el Préstamo Vehicular.");
-            btnCrearPrestamoVeh.setEnabled(false); // Deshabilita el botón de crear préstamo
+            JOptionPane.showMessageDialog(this, "Tarjeta de Propiedad no encontrada. Debe crear la tarjeta primero.");
+            btnCrearPrestamoVeh.setEnabled(false);
         }
     }//GEN-LAST:event_btnSeleccionarTarjetaActionPerformed
 

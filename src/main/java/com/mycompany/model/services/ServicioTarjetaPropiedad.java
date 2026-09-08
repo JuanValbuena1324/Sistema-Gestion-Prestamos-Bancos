@@ -47,8 +47,9 @@ public class ServicioTarjetaPropiedad {
     }
 
     public boolean eliminarTarjetaPropiedad(String placa) {
-        if (tarjetas.containsKey(placa)) {
-            tarjetas.remove(placa);
+        TarjetaPropiedad tarjeta = tarjetas.get(placa);
+        if (tarjeta != null) {
+            tarjeta.setEstado("IN");
             return true;
         }
         return false;

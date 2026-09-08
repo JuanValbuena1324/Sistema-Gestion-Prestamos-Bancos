@@ -50,13 +50,13 @@ public class GUIListarHipotecario extends javax.swing.JFrame implements ICambiab
 
         tblListarHipotecario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Regsitro", "Tipo Inmueble", "Direccion Inmueble"
+                "Id Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Regsitro", "Tipo Inmueble", "Direccion Inmueble", "Estado"
             }
         ));
         jScrollPane1.setViewportView(tblListarHipotecario);
@@ -100,19 +100,17 @@ public class GUIListarHipotecario extends javax.swing.JFrame implements ICambiab
         modelo.setRowCount(0);
 
         for (Prestamo prestamo : prestamos.values()) {
-
             if (prestamo instanceof PrestamoHipotecario) {
-
                 PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
-
                 Object[] fila = new Object[]{
                     hipo.getIdPrestamo(),
-                    String.format("$ %, .0f", hipo.getMonto()),
+                    hipo.getMonto(),
                     hipo.getTasaIntereses(),
                     hipo.getPlazoMeses(),
                     hipo.getFechaRegistro(),
                     hipo.getTipoInmueble(),
-                    hipo.getDireccionInmueble()
+                    hipo.getDireccionInmueble(),
+                    hipo.getEstado() 
                 };
                 modelo.addRow(fila);
             }

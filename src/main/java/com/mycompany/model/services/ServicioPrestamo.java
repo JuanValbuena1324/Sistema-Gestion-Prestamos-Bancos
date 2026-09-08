@@ -79,9 +79,10 @@ public class ServicioPrestamo implements IServicioPrestamo {
 
     @Override
     public boolean eliminarPrestamo(int id) {
-        if (prestamos.containsKey(id)) {
-            prestamos.remove(id);
-            notificar(); // Notifica a GUIs de Listar
+        Prestamo prestamo = prestamos.get(id);
+        if (prestamo != null) {
+            prestamo.setEstado("IN");
+            notificar(); 
             return true;
         }
         return false;

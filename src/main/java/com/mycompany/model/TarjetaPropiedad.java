@@ -1,13 +1,15 @@
 package com.mycompany.model;
 
-public class TarjetaPropiedad 
-{
-    private String placa;      
-    private String numMotor; 
+public class TarjetaPropiedad {
+
+    private String placa;
+    private String numMotor;
+    private String estado;
 
     public TarjetaPropiedad(String placa, String numMotor) {
         this.placa = placa;
         this.numMotor = numMotor;
+        this.estado = "AC";
     }
 
     public String getPlaca() {
@@ -26,9 +28,17 @@ public class TarjetaPropiedad
         this.numMotor = numMotor;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public String mostrarTarjetaPropiedad() {
-        return "Tarjeta de Propiedad:\n" +
-                "Placa del Vehículo: " + placa + "\n" +
-                "Número de Motor: " + numMotor;
+        return "Tarjeta de Propiedad:\n"
+                + "Placa del Vehículo: " + placa + "\n"
+                + "Número de Motor: " + numMotor;
     }
 }

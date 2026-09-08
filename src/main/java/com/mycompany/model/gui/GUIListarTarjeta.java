@@ -42,13 +42,13 @@ public class GUIListarTarjeta extends javax.swing.JFrame {
 
         tblTarjetas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Placa", "NumMotor"
+                "Placa", "NumMotor", "Estado"
             }
         ));
         jScrollPane1.setViewportView(tblTarjetas);
@@ -65,11 +65,11 @@ public class GUIListarTarjeta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnListarTarjeta)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,22 +85,22 @@ public class GUIListarTarjeta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTarjetaActionPerformed
-        // 1. Obtener la lista de tarjetas
+
         Map<String, TarjetaPropiedad> tarjetas = ServicioTarjetaPropiedad.getInstance().getTarjetas();
-
-        // 2. Prepare la tabla
         DefaultTableModel modelo = (DefaultTableModel) tblTarjetas.getModel();
-        modelo.setRowCount(0); // Limpiar tabla
+        modelo.setRowCount(0); 
 
-        // 3. Recorrer les tarjetas
         for (TarjetaPropiedad tarjeta : tarjetas.values()) {
             Object[] fila = new Object[]{
-                tarjeta.getPlaca(), // Columna 1: Placa
-                tarjeta.getNumMotor() // Columna 2: NumMotor
+                tarjeta.getPlaca(), 
+                tarjeta.getNumMotor(),
+                tarjeta.getEstado()
             };
             modelo.addRow(fila);
+            
         }    }//GEN-LAST:event_btnListarTarjetaActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

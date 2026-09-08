@@ -50,13 +50,13 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
 
         tblListarVehicular.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Registro", "Valor Comercial", "Marca Vehiculo", "Placa Vehiculo", "NumMotor"
+                "ID Prestamo", "Monto", "Tasa Interes", "Plazo Meses", "Fecha Registro", "Valor Comercial", "Marca Vehiculo", "Placa Vehiculo", "NumMotor", "Estado"
             }
         ));
         jScrollPane1.setViewportView(tblListarVehicular);
@@ -75,18 +75,18 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtListar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 889, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 956, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtListar))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(txtListar)
-                .addContainerGap())
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         pack();
@@ -100,22 +100,19 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
         modelo.setRowCount(0);
 
         for (Prestamo prestamo : prestamos.values()) {
-
             if (prestamo instanceof PrestamoVehicular) {
-
                 PrestamoVehicular veh = (PrestamoVehicular) prestamo;
-
                 Object[] fila = new Object[]{
                     veh.getIdPrestamo(),
-                    String.format("$ %, .0f", veh.getMonto()),
+                    veh.getMonto(),
                     veh.getTasaIntereses(),
                     veh.getPlazoMeses(),
                     veh.getFechaRegistro(),
-                    String.format("$ %, .0f", veh.getValorComercial()),
+                    veh.getValorComercial(),
                     veh.getMarcaVehiculo(),
                     veh.getTarjetaPropiedad().getPlaca(),
-                    veh.getTarjetaPropiedad().getNumMotor()
-
+                    veh.getTarjetaPropiedad().getNumMotor(),
+                    veh.getEstado() 
                 };
                 modelo.addRow(fila);
             }
@@ -183,7 +180,7 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
                     veh.getMarcaVehiculo(),
                     veh.getTarjetaPropiedad().getPlaca(),
                     veh.getTarjetaPropiedad().getNumMotor()
-                        
+
                 };
                 modelo.addRow(fila);
             }
