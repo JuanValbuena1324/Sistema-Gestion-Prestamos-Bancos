@@ -95,7 +95,7 @@ public class GUICalcularCuotaVehicular extends javax.swing.JFrame {
         // 3. Recorrer TODOS, pero FILTRAR solo los vehiculares
         for (Prestamo prestamo : prestamos.values()) {
 
-            if (prestamo instanceof PrestamoVehicular) {
+            if (prestamo instanceof PrestamoVehicular && prestamo.getEstado().equals("AC")) {
 
                 // 4. Cast directo para acceder a datos específicos
                 PrestamoVehicular veh = (PrestamoVehicular) prestamo;

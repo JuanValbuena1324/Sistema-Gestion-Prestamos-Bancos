@@ -104,7 +104,7 @@ public class GUIListarHipotecario extends javax.swing.JFrame implements ICambiab
                 PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
                 Object[] fila = new Object[]{
                     hipo.getIdPrestamo(),
-                    hipo.getMonto(),
+                    String.format("$ %, .0f", hipo.getMonto()),
                     hipo.getTasaIntereses(),
                     hipo.getPlazoMeses(),
                     hipo.getFechaRegistro(),
@@ -170,12 +170,13 @@ public class GUIListarHipotecario extends javax.swing.JFrame implements ICambiab
                 PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
                 Object[] fila = new Object[]{
                     hipo.getIdPrestamo(),
-                    hipo.getMonto(),
+                    String.format("$ %, .0f", hipo.getMonto()),
                     hipo.getTasaIntereses(),
                     hipo.getPlazoMeses(),
                     hipo.getFechaRegistro(),
                     hipo.getTipoInmueble(),
-                    hipo.getDireccionInmueble()
+                    hipo.getDireccionInmueble(),
+                    hipo.getEstado()
                 };
                 modelo.addRow(fila);
             }

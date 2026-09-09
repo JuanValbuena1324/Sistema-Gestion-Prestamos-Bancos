@@ -95,10 +95,9 @@ public class GUICalcularCuotaHipotecario extends javax.swing.JFrame {
 
         for (Prestamo prestamo : prestamos.values()) {
 
-            if (prestamo instanceof PrestamoHipotecario) {
+            if (prestamo instanceof PrestamoHipotecario && prestamo.getEstado().equals("AC")) {
 
                 PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
-
                 double cuota = hipo.calcularCuotaMensual();
 
                 Object[] fila = new Object[]{

@@ -271,7 +271,7 @@ public class GUIEliminarVehicular extends javax.swing.JFrame {
                     PrestamoVehicular veh = (PrestamoVehicular) prestamo;
 
                     // Llenar los campos de visualización
-                    txtMonto.setText(String.valueOf(veh.getMonto()));
+                    txtMonto.setText(String.format("$%, .0f", prestamo.getMonto()));
                     txtInteres.setText(String.valueOf(veh.getTasaIntereses()));
                     txtPlazo.setText(String.valueOf(veh.getPlazoMeses()));
                     txtFecha.setText(String.valueOf(veh.getFechaRegistro()));

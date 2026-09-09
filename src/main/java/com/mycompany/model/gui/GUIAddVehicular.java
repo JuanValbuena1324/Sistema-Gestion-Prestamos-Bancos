@@ -228,6 +228,8 @@ public class GUIAddVehicular extends javax.swing.JFrame {
 
                 if (!tarjeta.getEstado().equals("AC")) {
                     JOptionPane.showMessageDialog(this, "Esta Tarjeta de Propiedad está INACTIVA (IN). No se puede crear un préstamo con esta tarjeta.");
+                    txtPlacaVehiculo.setText("");
+                    txtNumeroMotor.setText("");
                     return;
                 }
 
@@ -244,6 +246,8 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                 }
                 if (tarjetaYaUsada) {
                     JOptionPane.showMessageDialog(this, "Esta Tarjeta de Propiedad (Placa) ya está asociada a otro Préstamo Vehicular. No se puede crear un nuevo préstamo.");
+                    txtPlacaVehiculo.setText("");
+                    txtNumeroMotor.setText("");
                     return;
                 }
                 PrestamoVehicular prestamo = new PrestamoVehicular(
@@ -263,9 +267,9 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                 txtMarca.setText("");
                 txtPlacaVehiculo.setText("");
                 txtNumeroMotor.setText("");
-                jDateChooser1.setDate(null); 
+                jDateChooser1.setDate(null);
 
-                btnCrearPrestamoVeh.setEnabled(false); 
+                btnCrearPrestamoVeh.setEnabled(false);
 
             } else {
                 JOptionPane.showMessageDialog(this, "Debe seleccionar una fecha.");
@@ -290,7 +294,7 @@ public class GUIAddVehicular extends javax.swing.JFrame {
                 btnCrearPrestamoVeh.setEnabled(true);
             } else {
                 txtNumeroMotor.setText("");
-                JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Estado: INACTIVO (IN). Debe crear una nueva tarjeta o reactivar la existente.");
+                JOptionPane.showMessageDialog(this, "Tarjeta no encontrada. Estado: INACTIVO (IN). Debe crear una nueva tarjeta o que este Activo.");
                 btnCrearPrestamoVeh.setEnabled(false);
             }
         } else {

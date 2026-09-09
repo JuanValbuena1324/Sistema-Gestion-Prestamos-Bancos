@@ -104,7 +104,7 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
                 PrestamoVehicular veh = (PrestamoVehicular) prestamo;
                 Object[] fila = new Object[]{
                     veh.getIdPrestamo(),
-                    veh.getMonto(),
+                    String.format("$ %, .0f", veh.getMonto()),
                     veh.getTasaIntereses(),
                     veh.getPlazoMeses(),
                     veh.getFechaRegistro(),
@@ -112,7 +112,7 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
                     veh.getMarcaVehiculo(),
                     veh.getTarjetaPropiedad().getPlaca(),
                     veh.getTarjetaPropiedad().getNumMotor(),
-                    veh.getEstado() 
+                    veh.getEstado()
                 };
                 modelo.addRow(fila);
             }
@@ -172,14 +172,15 @@ public class GUIListarVehicular extends javax.swing.JFrame implements ICambiable
                 PrestamoVehicular veh = (PrestamoVehicular) prestamo;
                 Object[] fila = new Object[]{
                     veh.getIdPrestamo(),
-                    veh.getMonto(),
+                    String.format("$ %, .0f", veh.getMonto()),
                     veh.getTasaIntereses(),
                     veh.getPlazoMeses(),
                     veh.getFechaRegistro(),
-                    veh.getValorComercial(),
+                    String.format("$ %, .0f", veh.getValorComercial()),
                     veh.getMarcaVehiculo(),
                     veh.getTarjetaPropiedad().getPlaca(),
-                    veh.getTarjetaPropiedad().getNumMotor()
+                    veh.getTarjetaPropiedad().getNumMotor(),
+                    veh.getEstado()
 
                 };
                 modelo.addRow(fila);

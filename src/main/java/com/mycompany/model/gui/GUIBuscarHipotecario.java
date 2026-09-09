@@ -160,7 +160,7 @@ public class GUIBuscarHipotecario extends javax.swing.JFrame {
 
         if (prestamo != null) {
 
-            txtMonto.setText(String.valueOf(prestamo.getMonto()));
+            txtMonto.setText(String.format("$%, .0f", prestamo.getMonto()));
             txtTasaInteres.setText(String.valueOf(prestamo.getTasaIntereses()));
             txtPlazoMeses.setText(String.valueOf(prestamo.getPlazoMeses()));
             txtFecha.setText(String.valueOf(prestamo.getFechaRegistro()));

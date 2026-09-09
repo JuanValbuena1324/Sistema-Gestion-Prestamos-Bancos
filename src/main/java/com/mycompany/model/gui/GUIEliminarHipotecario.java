@@ -233,8 +233,7 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
                 if (prestamo instanceof PrestamoHipotecario) {
                     PrestamoHipotecario hipo = (PrestamoHipotecario) prestamo;
 
-                    // Llenar los campos de visualización
-                    txtMonto.setText(String.valueOf(hipo.getMonto()));
+                    txtMonto.setText(String.format("$%, .0f", prestamo.getMonto()));
                     txtTasaInteres.setText(String.valueOf(hipo.getTasaIntereses()));
                     txtPlazo.setText(String.valueOf(hipo.getPlazoMeses()));
                     txtFecha.setText(String.valueOf(hipo.getFechaRegistro()));
@@ -243,7 +242,6 @@ public class GUIEliminarHipotecario extends javax.swing.JFrame {
 
                     JOptionPane.showMessageDialog(this, "Préstamo Hipotecario encontrado! \nAhora puede eliminar.");
 
-                    // HABILITAR EL BOTÓN ELIMINAR
                     btnEliminarHipotecario.setEnabled(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "El ID ingresado pertenece a un Préstamo Vehicular. Vaya a la GUI de eliminar vehicular.");
